@@ -50,9 +50,10 @@ export default class MyPlugin extends Plugin {
 			}
 
 			const templateContent = await this.app.vault.read(abstractFile);
-			const section = this.extractSection(templateContent);
+			const sep = this.settings.sectionSeparator || '---';
+			const section = this.extractSection(templateContent, sep);
 			if (section === null) {
-				new Notice('Could not find a --- block in the template file.');
+				new Notice(`Could not find a "${sep}" block in the template file.`);
 				return;
 			}
 
@@ -65,10 +66,12 @@ export default class MyPlugin extends Plugin {
 		}
 	}
 
-	extractSection(templateContent: string): string | null {
-		const parts = templateContent.split(/^---\s*$/m);
-		// parts[0] = before first ---, parts[1] = section body, parts[2] = after last ---
+	extractSection(templateContent: string, separator: string): string | null {
+		const escapedSep = separator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		const pattern = new RegExp(`^${escapedSep}\\s*$`, 'm');
+		const parts = templateContent.split(pattern);
+		// parts[0] = before first separator, parts[1] = section body, parts[2] = after last separator
 		if (parts.length < 3) return null;
-		return parts[1] + '---';
+		return parts[1] + separator;
 	}
 }

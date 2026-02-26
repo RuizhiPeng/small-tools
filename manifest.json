@@ -1,11 +1,11 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
+	"id": "append_dailynote",
+	"name": "Append daily note",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "Append a new section to daily note when working on multiple projects in a day.",
+	"author": "Ruizhi Peng",
+	"authorUrl": "https://github.com/RuizhiPeng/small-tools",
+	"fundingUrl": "https://buymeacoffee.com/rzpeng96",
 	"isDesktopOnly": false
 }

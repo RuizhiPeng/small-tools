@@ -4,11 +4,13 @@ import MyPlugin from "./main";
 export interface MyPluginSettings {
 	mySetting: string;
 	templateFilePath: string;
+	sectionSeparator: string;
 }
 
 export const DEFAULT_SETTINGS: MyPluginSettings = {
 	mySetting: 'default',
-	templateFilePath: 'a_template/daily note template.md'
+	templateFilePath: 'a_template/daily note template.md',
+	sectionSeparator: '---'
 }
 
 export class SampleSettingTab extends PluginSettingTab {
@@ -43,6 +45,17 @@ export class SampleSettingTab extends PluginSettingTab {
 				.setValue(this.plugin.settings.templateFilePath)
 				.onChange(async (value) => {
 					this.plugin.settings.templateFilePath = value;
+					await this.plugin.saveSettings();
+				}));
+
+		new Setting(containerEl)
+			.setName('Section separator')
+			.setDesc('The delimiter used to separate sections in the template file. Default: ---')
+			.addText(text => text
+				.setPlaceholder('---')
+				.setValue(this.plugin.settings.sectionSeparator)
+				.onChange(async (value) => {
+					this.plugin.settings.sectionSeparator = value;
 					await this.plugin.saveSettings();
 				}));
 	}
