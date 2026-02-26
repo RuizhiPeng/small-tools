@@ -3,10 +3,12 @@ import MyPlugin from "./main";
 
 export interface MyPluginSettings {
 	mySetting: string;
+	templateFilePath: string;
 }
 
 export const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
+	mySetting: 'default',
+	templateFilePath: 'a_template/daily note template.md'
 }
 
 export class SampleSettingTab extends PluginSettingTab {
@@ -30,6 +32,17 @@ export class SampleSettingTab extends PluginSettingTab {
 				.setValue(this.plugin.settings.mySetting)
 				.onChange(async (value) => {
 					this.plugin.settings.mySetting = value;
+					await this.plugin.saveSettings();
+				}));
+
+		new Setting(containerEl)
+			.setName('Template file path')
+			.setDesc('Vault-relative path to the template file used by the "Append section" button.')
+			.addText(text => text
+				.setPlaceholder('a_template/daily note template.md')
+				.setValue(this.plugin.settings.templateFilePath)
+				.onChange(async (value) => {
+					this.plugin.settings.templateFilePath = value;
 					await this.plugin.saveSettings();
 				}));
 	}
