@@ -41,7 +41,7 @@ When you're editing a daily note and want to log another entry, click the **`+` 
 ```
 ---
 
-# #pregnancy
+# #project
 
 #####  What I did
 
